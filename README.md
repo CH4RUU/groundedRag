@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./frontend/public/hero.png" alt="RAG Intelligence Architecture" width="100%" />
+  <img src="Screenshot 1.png" alt="RAG Intelligence Architecture" width="100%" />
   
   <h1>🚀 Production-Grade RAG System</h1>
   <p><strong>Hybrid Search • Cross-Encoder Re-Ranking • Citation-Enforced Answers • Cerebras Llama-3.1-8b</strong></p>
@@ -36,8 +36,8 @@ The entire application is currently live and deployed!
 
 <div align="center">
   <!-- NOTE: Add your real screenshots to the /docs folder and update these paths! -->
-  <img src="https://via.placeholder.com/800x450/111111/8b5cf6?text=Frontend+Dashboard+-+Add+Screenshot+1+Here" alt="Frontend Dashboard" width="48%" />
-  <img src="https://via.placeholder.com/800x450/111111/10b981?text=Latency+Tooltips+-+Add+Screenshot+2+Here" alt="Observability Tooltips" width="48%" />
+  <img src="Screenshot 1.png" alt="Frontend Dashboard" width="89%" />
+  <img src="Screenshot 2.png" alt="Observability Tooltips" width="89%" />
 </div>
 
 ---
