@@ -1,0 +1,56 @@
+# ── Web Framework ─────────────────────────────────────
+fastapi==0.111.1
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9
+
+# ── LangChain Ecosystem ───────────────────────────────
+langchain
+langchain-core<0.4.0
+langchain-community
+langchain-google-genai
+langchain-huggingface
+langchain-groq
+langchain-openai>=0.1.0
+langchain-qdrant
+langchain-text-splitters
+
+# ── Vector Database (REST only — avoids grpcio/protobuf conflict) ─────
+# qdrant-client[rest] skips grpcio-tools which requires protobuf>=6
+# but langchain-google-genai requires protobuf<5. REST mode has no conflict.
+qdrant-client
+
+# ── Embeddings / Reranking ────────────────────────────
+sentence-transformers
+
+# ── Document Loading ──────────────────────────────────
+pypdf==4.3.1
+beautifulsoup4==4.12.3
+lxml==5.3.0
+requests==2.32.3
+
+# ── BM25 (Hybrid Search) ─────────────────────────────
+rank-bm25==0.2.2
+
+# ── Tokenization ──────────────────────────────────────
+tiktoken
+
+# ── Observability ─────────────────────────────────────
+langfuse==2.47.0
+
+# ── Validation & Config ───────────────────────────────
+pydantic==2.8.2
+pydantic-settings==2.4.0
+python-dotenv==1.0.1
+pyyaml==6.0.2
+
+# ── Retry / Backoff ───────────────────────────────────
+tenacity==8.5.0
+
+# ── HTTP ──────────────────────────────────────────────
+httpx==0.27.0
+
+# ── Evaluation ────────────────────────────────────────
+ragas
+datasets==2.21.0
+pytest==8.3.2
+pytest-asyncio==0.23.8

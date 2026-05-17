@@ -1,0 +1,42 @@
+.skeleton { overflow: hidden; }
+
+.metaBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+
+.body { padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+
+.footer {
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+}
+
+/* Shimmer effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 6px;
+}
+
+.badgePH { width: 80px; height: 22px; border-radius: 100px; }
+.barPH { width: 80px; height: 4px; border-radius: 2px; }
+
+.line { height: 14px; }
+.long  { width: 90%; }
+.medium { width: 70%; }
+.short { width: 45%; }
+
+.chipPH { height: 24px; width: 90px; border-radius: 100px; }

@@ -1,0 +1,3 @@
+# corpus documents go here
+# add .pdf, .md, or .html files to seed the vector database
+# Run: python backend/scripts/seed.py   for automatic web seeding

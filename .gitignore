@@ -1,0 +1,61 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.log
+
+# ── Secrets / environment ──────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Evaluation artifacts (generated at runtime — never commit raw results) ────
+evaluation/eval_results.json
+
+# ── Node / Frontend ───────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+dist/
+.cache/
+*.tsbuildinfo
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+*.dockerignore
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.bak
+*.tmp

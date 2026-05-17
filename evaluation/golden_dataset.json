@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What is LangChain Expression Language (LCEL)?",
+    "ground_truth": "LCEL is a declarative way to compose chains in LangChain. It allows you to build complex pipelines using the pipe operator (|) to connect runnables together.",
+    "ground_truth_context": "LCEL makes it easy to build complex chains from basic components. Chains built with LCEL support streaming, async, batching, and parallel execution out of the box."
+  },
+  {
+    "question": "What is the role of a Retriever in LangChain?",
+    "ground_truth": "A Retriever is an interface that returns relevant documents given an unstructured query. It does not store documents itself but retrieves them from an underlying store.",
+    "ground_truth_context": "Retrievers implement the BaseRetriever interface and expose a get_relevant_documents method. VectorStoreRetriever is the most commonly used type."
+  },
+  {
+    "question": "What is Retrieval-Augmented Generation?",
+    "ground_truth": "RAG is a technique that supplements an LLM's knowledge by retrieving relevant documents from an external knowledge base and including them in the prompt context.",
+    "ground_truth_context": "RAG systems retrieve chunks of text from a document store and include them in the prompt so the LLM can reference current, domain-specific information."
+  },
+  {
+    "question": "How does EnsembleRetriever perform rank fusion?",
+    "ground_truth": "EnsembleRetriever uses Reciprocal Rank Fusion (RRF). Each document's score is 1/(k + rank), where k is typically 60. Documents appearing in multiple retriever results are boosted.",
+    "ground_truth_context": "Reciprocal Rank Fusion combines ranked lists. The final score per document is the sum of 1/(k + rank_i) across all retrievers that returned that document."
+  },
+  {
+    "question": "What are the main LangChain document loaders?",
+    "ground_truth": "LangChain provides loaders like PyPDFLoader for PDFs, WebBaseLoader for web pages, TextLoader for plain text, and UnstructuredMarkdownLoader for Markdown files.",
+    "ground_truth_context": "LangChain-community provides integrations with dozens of loaders. Each loader returns a list of Document objects with page_content and metadata."
+  },
+  {
+    "question": "What is ContextualCompressionRetriever?",
+    "ground_truth": "It is a retriever that uses a document compressor to filter or compress retrieved documents before returning them. It is commonly used with re-rankers like Cohere Rerank.",
+    "ground_truth_context": "ContextualCompressionRetriever wraps a base retriever and a compressor. The compressor takes the query and retrieved docs and returns a compressed/reranked subset."
+  },
+  {
+    "question": "What is the difference between similarity_search and max_marginal_relevance_search?",
+    "ground_truth": "similarity_search returns the most semantically similar documents. max_marginal_relevance_search balances relevance with diversity to avoid returning highly redundant results.",
+    "ground_truth_context": "MMR (Maximal Marginal Relevance) reduces redundancy in retrieved results by penalizing documents that are too similar to already-selected ones."
+  },
+  {
+    "question": "How does LangChain handle prompt versioning?",
+    "ground_truth": "LangChain supports prompt templates via ChatPromptTemplate. Prompts can be stored externally (YAML/JSON) and loaded dynamically, enabling version control and A/B testing.",
+    "ground_truth_context": "Prompt templates in LangChain accept variable inputs and can be composed. Loading from YAML files allows treating prompts as versioned configuration."
+  },
+  {
+    "question": "What is Pydantic's role in LangChain output parsing?",
+    "ground_truth": "Pydantic models define the expected structure of the LLM output. LangChain's with_structured_output method binds the LLM to a Pydantic schema, forcing structured JSON responses.",
+    "ground_truth_context": "with_structured_output wraps an LLM to validate and parse its output against a Pydantic model. This prevents hallucinated or malformed JSON."
+  },
+  {
+    "question": "What is a VectorStore in LangChain?",
+    "ground_truth": "A VectorStore stores document embeddings and provides semantic search capabilities. Common implementations include Qdrant, Chroma, Pinecone, and FAISS.",
+    "ground_truth_context": "VectorStores take text, convert it to vector embeddings, and store them for similarity-based retrieval. LangChain provides a standard interface for all providers."
+  },
+  {
+    "question": "What is the RecursiveCharacterTextSplitter?",
+    "ground_truth": "It splits text using a hierarchy of separators (paragraphs, sentences, words) recursively until each chunk is below the target size. It preserves semantic boundaries.",
+    "ground_truth_context": "RecursiveCharacterTextSplitter tries to split on double newlines first, then single newlines, then spaces. It overlaps chunks to maintain context across boundaries."
+  },
+  {
+    "question": "What is the purpose of chunk_overlap in text splitting?",
+    "ground_truth": "Chunk overlap ensures that the boundary between adjacent chunks shares some text, preventing important context from being cut off at the edges of a chunk.",
+    "ground_truth_context": "An overlap of 100 tokens means consecutive chunks share 100 tokens of text, maintaining continuity and preventing loss of context at chunk boundaries."
+  },
+  {
+    "question": "What is BM25 and how does it differ from vector search?",
+    "ground_truth": "BM25 is a classical keyword-based ranking algorithm using TF-IDF statistics. Vector search uses semantic embeddings. BM25 excels at exact keyword matches while vector search captures meaning.",
+    "ground_truth_context": "BM25 scores documents based on term frequency and inverse document frequency. Vector search uses cosine similarity between dense embeddings, capturing semantic relationships."
+  },
+  {
+    "question": "What does the Cohere Rerank API do?",
+    "ground_truth": "Cohere Rerank is a cross-encoder model that scores each (query, document) pair and returns a re-ordered list with higher precision than the initial retrieval stage.",
+    "ground_truth_context": "Cross-encoder models process query and document together for more accurate relevance scoring. Cohere's rerank model returns relevance scores between 0 and 1 for each pair."
+  },
+  {
+    "question": "What LLM does this RAG system use by default?",
+    "ground_truth": "The system uses Google Gemini 1.5 Flash via the Google Gemini API free tier.",
+    "ground_truth_context": "Google Gemini 1.5 Flash is used as the LLM. It has a free tier of 15 RPM and 1 million tokens per minute, sufficient for portfolio demonstrations."
+  },
+  {
+    "question": "What is Langfuse and why is it used here?",
+    "ground_truth": "Langfuse is an open-source LLM observability platform. It is used to trace each RAG request's latency, token usage, retrieval steps, and LLM calls.",
+    "ground_truth_context": "Langfuse captures traces via LangChain callbacks. Each trace includes the input, retrieval results, prompt, and LLM response with token counts."
+  },
+  {
+    "question": "What is the Faithfulness metric in Ragas?",
+    "ground_truth": "Faithfulness measures whether the claims in the generated answer are supported by the retrieved context. A score of 1.0 means every claim is grounded in the context.",
+    "ground_truth_context": "Ragas calculates faithfulness by extracting claims from the answer and verifying each claim against the context chunks using an LLM judge."
+  },
+  {
+    "question": "What vector database is used in this RAG system?",
+    "ground_truth": "Qdrant Cloud is used as the vector database. It provides a free 1GB permanent cluster and natively supports hybrid search with sparse and dense vectors.",
+    "ground_truth_context": "Qdrant Cloud is chosen for its permanent free tier, low latency, and native support for both dense semantic vectors and sparse BM25 vectors."
+  },
+  {
+    "question": "How does the CI/CD pipeline gate on quality?",
+    "ground_truth": "GitHub Actions runs Ragas evaluation on every pull request. If the faithfulness score drops below 0.90, the build fails and the PR cannot be merged.",
+    "ground_truth_context": "The CI pipeline runs pytest and Ragas evaluations. run_evaluation.py exits with code 1 if faithfulness < 0.90, which GitHub Actions treats as a build failure."
+  },
+  {
+    "question": "What embedding model is used?",
+    "ground_truth": "The system uses Cohere's embed-english-v3.0 model, which produces 1024-dimensional embeddings on the free developer tier.",
+    "ground_truth_context": "Cohere's embed-english-v3.0 is a state-of-the-art embedding model producing 1024-dim vectors. It is available for free on the developer tier."
+  }
+]

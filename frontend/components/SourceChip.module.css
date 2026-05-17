@@ -1,0 +1,28 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  color: #93c5fd;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-decoration: none;
+  transition: all var(--transition);
+  cursor: default;
+}
+a.chip { cursor: pointer; }
+a.chip:hover {
+  background: rgba(59,130,246,0.14);
+  border-color: rgba(59,130,246,0.35);
+  color: #bfdbfe;
+}
+
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  flex-shrink: 0;
+}
