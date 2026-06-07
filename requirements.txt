@@ -2,10 +2,14 @@ langchain
 langchain-community
 langchain-qdrant
 langchain-google-genai
+langchain-cohere
+langchain-classic
 qdrant-client
+fastembed
 pypdf
 unstructured
 python-dotenv
 tiktoken
 ragas
 datasets
+tenacity
