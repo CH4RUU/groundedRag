@@ -34,14 +34,17 @@ def format_docs(docs):
     )
 
 def is_429_error(exception):
+    print(f"[RETRY CHECK] Checking exception: {type(exception).__name__} - {str(exception)}", flush=True)
     if hasattr(exception, 'code') and exception.code == 429:
+        print("[RETRY CHECK] Matched 429 code.", flush=True)
         return True
     if "429" in str(exception) or "RESOURCE_EXHAUSTED" in str(exception) or "Quota exceeded" in str(exception):
+        print("[RETRY CHECK] Matched 429 string.", flush=True)
         return True
     return False
 
 @retry(
-    wait=wait_exponential(multiplier=5, min=10, max=120),
+    wait=wait_exponential(multiplier=2, min=5, max=60),
     stop=stop_after_attempt(10),
     retry=retry_if_exception(is_429_error)
 )
@@ -63,7 +66,7 @@ def main():
     client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
     
     print("[TRACE] Initializing Google Embeddings...", flush=True)
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", transport="rest")
     
     print("[TRACE] Initializing FastEmbedSparse...", flush=True)
     # Limiting threads in fastembed to prevent ONNX threadpool deadlocks in GitHub Actions
@@ -89,7 +92,7 @@ def main():
     print("[TRACE] Setup Generator Pipeline...", flush=True)
     # 2. Setup Generator Pipeline with High Retry to bypass free limits
     print("[TRACE] Creating ChatGoogleGenerativeAI object...", flush=True)
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10, google_api_key=google_api_key)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10, google_api_key=google_api_key, transport="rest")
     print("[TRACE] Opening prompts_v1.json...", flush=True)
     with open("prompts_v1.json", "r") as f:
         prompt_config = json.load(f)
