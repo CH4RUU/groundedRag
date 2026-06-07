@@ -1,0 +1,11 @@
+langchain
+langchain-community
+langchain-qdrant
+langchain-google-genai
+qdrant-client
+pypdf
+unstructured
+python-dotenv
+tiktoken
+ragas
+datasets

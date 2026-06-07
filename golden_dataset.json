@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What is the course code for 'Introduction to Problem Solving and Programming'?",
+    "ground_truth": "CSE1021"
+  },
+  {
+    "question": "Does the CSE1021 course have any prerequisites?",
+    "ground_truth": "Nil"
+  },
+  {
+    "question": "Which specific tools are students expected to learn for programming and flowcharting in this course?",
+    "ground_truth": "Scratch and Raptor"
+  },
+  {
+    "question": "What is one of the course objectives related to logical thinking for problem solving?",
+    "ground_truth": "Introduce the essential skills for a logical thinking for problem solving solving"
+  },
+  {
+    "question": "How many hours are allocated to the 'Fundamental Algorithms' unit?",
+    "ground_truth": "11"
+  },
+  {
+    "question": "What are the primary modes of teaching and learning for this course?",
+    "ground_truth": "The primary modes of teaching and learning are Flipped Class Room, Activity Based Teaching/Learning, and Digital/Computer based models, wherever possible to use scratch and raptor tools."
+  },
+  {
+    "question": "Name two assessment components that may be used in addition to Continuous Assessment Tests and Final Examinations.",
+    "ground_truth": "The assessment and evaluation components may consist of unannounced open book examinations, quizzes, student\u2019s portfolio generation and assessment, and any other innovative assessment practices followed by faculty, in addition to the Continuous Assessment Tests and Final Examinations."
+  },
+  {
+    "question": "Who is the author of the textbook titled \"How to Solve it by Computer\"?",
+    "ground_truth": "The author of the textbook \"How to Solve it by Computer\" is Dromey R G."
+  },
+  {
+    "question": "Which tools are listed for drawing flowcharts in the indicative list of experiments?",
+    "ground_truth": "The tools listed for drawing flowcharts in the indicative list of experiments are yEd tool/Raptor Tool."
+  },
+  {
+    "question": "What is the ISBN for the reference book \"Think Python: How to Think Like a Computer Scientist (2 ed.)\" by Allen B. Downey?",
+    "ground_truth": "The ISBN for \"Think Python: How to Think Like a Computer Scientist (2 ed.)\" by Allen B. Downey is 978-9352134755."
+  }
+]
