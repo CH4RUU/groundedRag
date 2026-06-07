@@ -57,10 +57,17 @@ def main():
         raise ValueError("Missing required environment variables.")
 
     # 1. Setup Retriever Pipeline
+    print("[TRACE] Connecting to Qdrant...", flush=True)
     client = QdrantClient(url=qdrant_url, api_key=qdrant_api_key)
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
-    sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25")
     
+    print("[TRACE] Initializing Google Embeddings...", flush=True)
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    
+    print("[TRACE] Initializing FastEmbedSparse...", flush=True)
+    # Limiting threads in fastembed to prevent ONNX threadpool deadlocks in GitHub Actions
+    sparse_embeddings = FastEmbedSparse(model_name="Qdrant/bm25", threads=1)
+    
+    print("[TRACE] Creating QdrantVectorStore...", flush=True)
     vector_store = QdrantVectorStore(
         client=client,
         collection_name="domain_context",
@@ -69,6 +76,7 @@ def main():
         retrieval_mode=RetrievalMode.HYBRID,
     )
     
+    print("[TRACE] Setting up Retriever and Compressor...", flush=True)
     base_retriever = vector_store.as_retriever(search_kwargs={"k": 15})
     compressor = CohereRerank(cohere_api_key=cohere_api_key, model="rerank-english-v3.0", top_n=4)
     retriever = ContextualCompressionRetriever(
@@ -76,6 +84,7 @@ def main():
         base_retriever=base_retriever
     )
     
+    print("[TRACE] Setup Generator Pipeline...", flush=True)
     # 2. Setup Generator Pipeline with High Retry to bypass free limits
     llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10)
     with open("prompts_v1.json", "r") as f:
