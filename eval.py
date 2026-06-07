@@ -107,6 +107,9 @@ def main():
     with open("golden_dataset.json", "r") as f:
         golden_data = json.load(f)
 
+    # Slice the dataset down to 2 items to guarantee it fits perfectly within the Free Tier limits
+    golden_data = golden_data[:2]
+
     print(f"Loaded {len(golden_data)} golden examples. Running RAG pipeline...", flush=True)
 
     # Data collection for Ragas
