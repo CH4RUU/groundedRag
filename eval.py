@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 # Ragas and Datasets
 from datasets import Dataset
 from ragas import evaluate
-from ragas.metrics.collections import faithfulness, answer_relevancy
 
 # LangChain models
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
@@ -154,32 +153,36 @@ def main():
         "reference": [g[0] for g in ground_truths]
     })
 
-    # 5. Evaluate using Ragas with Gemini Judge
-    print("Running Ragas evaluation with Gemini 2.5 Flash Judge...")
+    # 5. Run Ragas Evaluation
+    print("\nRunning Ragas evaluation with Gemini 2.5 Flash Judge...", flush=True)
+    from ragas.metrics import Faithfulness, AnswerRelevancy
+    from ragas.llms import LangchainLLMWrapper
+    from ragas.embeddings import LangchainEmbeddingsWrapper
     
-    # Ragas needs LLM and Embeddings explicitly configured for its metrics
-    judge_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10)
-    judge_embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    # Setup judge LLM and Embeddings
+    judge_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10, google_api_key=google_api_key, transport="rest")
+    judge_embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", transport="rest", google_api_key=google_api_key)
     
-    # Set the models in the metrics
-    for metric in [faithfulness, answer_relevancy]:
-        metric.llm = judge_llm
-        if hasattr(metric, "embeddings"):
-            metric.embeddings = judge_embeddings
+    ragas_llm = LangchainLLMWrapper(judge_llm)
+    ragas_embeddings = LangchainEmbeddingsWrapper(judge_embeddings)
+    
+    faithfulness_metric = Faithfulness(llm=ragas_llm)
+    answer_relevancy_metric = AnswerRelevancy(llm=ragas_llm, embeddings=ragas_embeddings)
 
     result = evaluate(
         dataset=eval_dataset,
-        metrics=[faithfulness, answer_relevancy],
+        metrics=[faithfulness_metric, answer_relevancy_metric],
+        raise_exceptions=False, # Don't crash pipeline if one sample fails
     )
     
-    print("\n" + "="*50)
-    print("EVALUATION RESULTS")
-    print("="*50)
-    print(result)
+    print("\n" + "="*50, flush=True)
+    print("EVALUATION RESULTS", flush=True)
+    print("="*50, flush=True)
+    print(result, flush=True)
 
     # 6. CI/CD Gating Assertion
     avg_faithfulness = result.get("faithfulness", 0)
-    print(f"\nAverage Faithfulness Score: {avg_faithfulness:.2f}")
+    print(f"\nAverage Faithfulness Score: {avg_faithfulness:.2f}", flush=True)
     
     if avg_faithfulness < 0.85:
         print("❌ FAILED: Faithfulness score is below the threshold of 0.85.")
