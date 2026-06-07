@@ -134,6 +134,10 @@ def main():
             "question": question
         })
         answer = response.content
+        if isinstance(answer, list):
+            answer = "".join([part.get("text", "") if isinstance(part, dict) else str(part) for part in answer])
+        elif not isinstance(answer, str):
+            answer = str(answer)
         
         questions.append(question)
         answers.append(answer)
