@@ -91,7 +91,7 @@ def main():
     print("[TRACE] Setup Generator Pipeline...", flush=True)
     # 2. Setup Generator Pipeline with High Retry to bypass free limits
     print("[TRACE] Creating ChatGoogleGenerativeAI object...", flush=True)
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10, google_api_key=google_api_key, transport="rest")
+    llm = ChatGoogleGenerativeAI(model="gemini-flash-latest", temperature=0, max_retries=10, google_api_key=google_api_key, transport="rest")
     print("[TRACE] Opening prompts_v1.json...", flush=True)
     with open("prompts_v1.json", "r") as f:
         prompt_config = json.load(f)
@@ -154,13 +154,13 @@ def main():
     })
 
     # 5. Run Ragas Evaluation
-    print("\nRunning Ragas evaluation with Gemini 2.5 Flash Judge...", flush=True)
+    print("\nRunning Ragas evaluation with Gemini Flash Latest Judge...", flush=True)
     from ragas.metrics import Faithfulness, AnswerRelevancy
     from ragas.llms import LangchainLLMWrapper
     from ragas.embeddings import LangchainEmbeddingsWrapper
     
     # Setup judge LLM and Embeddings
-    judge_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10, google_api_key=google_api_key, transport="rest")
+    judge_llm = ChatGoogleGenerativeAI(model="gemini-flash-latest", temperature=0, max_retries=10, google_api_key=google_api_key, transport="rest")
     judge_embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", transport="rest", google_api_key=google_api_key)
     
     ragas_llm = LangchainLLMWrapper(judge_llm)
