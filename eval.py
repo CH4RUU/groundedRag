@@ -99,7 +99,7 @@ def main():
     with open("golden_dataset.json", "r") as f:
         golden_data = json.load(f)
 
-    print(f"Loaded {len(golden_data)} golden examples. Running RAG pipeline...")
+    print(f"Loaded {len(golden_data)} golden examples. Running RAG pipeline...", flush=True)
 
     # Data collection for Ragas
     questions = []
@@ -111,10 +111,12 @@ def main():
         question = item["question"]
         ground_truth = item["ground_truth"]
         
+        print(f"[{idx+1}/10] Invoking retriever for question...", flush=True)
         # Run retrieval
         retrieved_docs = retriever.invoke(question)
         contexts = [doc.page_content for doc in retrieved_docs]
         
+        print(f"[{idx+1}/10] Generating answer from LLM...", flush=True)
         # Generate answer
         response = run_chain_with_retry(chain, {
             "context": format_docs(retrieved_docs),
@@ -127,7 +129,7 @@ def main():
         contexts_list.append(contexts)
         ground_truths.append([ground_truth]) # Ragas expects ground truth as list of strings
         
-        print(f"Processed {idx+1}/{len(golden_data)}. Sleeping 15s to respect free tier rate limits...")
+        print(f"Processed {idx+1}/{len(golden_data)}. Sleeping 15s to respect free tier rate limits...", flush=True)
         time.sleep(15)
 
     # 4. Construct HuggingFace Dataset
