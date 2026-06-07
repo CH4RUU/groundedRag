@@ -16,7 +16,8 @@ from qdrant_client import QdrantClient
 from langchain_core.prompts import PromptTemplate
 from langchain_cohere import CohereRerank
 from langchain_classic.retrievers.contextual_compression import ContextualCompressionRetriever
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type, retry_if_exception
+from google.genai.errors import ClientError
 
 # Fix for protobuf
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
@@ -30,15 +31,23 @@ def format_docs(docs):
         for doc in docs
     )
 
+def is_429_error(exception):
+    if hasattr(exception, 'code') and exception.code == 429:
+        return True
+    if "429" in str(exception) or "RESOURCE_EXHAUSTED" in str(exception) or "Quota exceeded" in str(exception):
+        return True
+    return False
+
 @retry(
     wait=wait_exponential(multiplier=5, min=10, max=120),
-    stop=stop_after_attempt(10)
+    stop=stop_after_attempt(10),
+    retry=retry_if_exception(is_429_error)
 )
 def run_chain_with_retry(chain, inputs):
     return chain.invoke(inputs)
 
 def main():
-    print("Initializing Evaluation Pipeline...")
+    print("Initializing Evaluation Pipeline...", flush=True)
     qdrant_url = os.environ.get("QDRANT_URL")
     qdrant_api_key = os.environ.get("QDRANT_API_KEY")
     cohere_api_key = os.environ.get("COHERE_API_KEY")
