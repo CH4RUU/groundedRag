@@ -21,6 +21,8 @@ from google.genai.errors import ClientError
 
 # Fix for protobuf
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+os.environ["GOOGLE_CLOUD_PROJECT"] = "dummy-project" # Prevents ADC metadata server hangs
+os.environ["GRPC_ENABLE_FORK_SUPPORT"] = "1"
 load_dotenv()
 
 def format_docs(docs):
@@ -86,12 +88,16 @@ def main():
     
     print("[TRACE] Setup Generator Pipeline...", flush=True)
     # 2. Setup Generator Pipeline with High Retry to bypass free limits
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10)
+    print("[TRACE] Creating ChatGoogleGenerativeAI object...", flush=True)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0, max_retries=10, google_api_key=google_api_key)
+    print("[TRACE] Opening prompts_v1.json...", flush=True)
     with open("prompts_v1.json", "r") as f:
         prompt_config = json.load(f)
+    print("[TRACE] Creating PromptTemplate...", flush=True)
     prompt = PromptTemplate.from_template(prompt_config["system_prompt"])
     chain = prompt | llm
 
+    print("[TRACE] Loading golden_dataset.json...", flush=True)
     # 3. Load Golden Dataset
     if not os.path.exists("golden_dataset.json"):
         raise FileNotFoundError("golden_dataset.json not found. Please provide it.")
