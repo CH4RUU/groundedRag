@@ -144,5 +144,5 @@ npm run dev
 ---
 
 <div align="center">
-  <p>Built with ❤️ by Ayush Deshmukh.</p>
+  <p>Built with ❤️ by Charu Jagguka.</p>
 </div>
