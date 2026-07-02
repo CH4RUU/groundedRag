@@ -28,7 +28,7 @@
 
 The entire application is currently live and deployed!
 - 🖥️ **Frontend (Vercel):** [https://production-grade-rag-system.vercel.app/](https://production-grade-rag-system.vercel.app/)
-- ⚙️ **Backend API (Hugging Face):** [https://ayush707-rag-backend.hf.space](https://ayush707-rag-backend.hf.space)
+- ⚙️ **Backend API (Hugging Face):** [https://rag-backend.hf.space](https://ayush707-rag-backend.hf.space)
 
 ---
 
