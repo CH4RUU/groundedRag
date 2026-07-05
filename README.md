@@ -1,6 +1,5 @@
 <div align="center">
 
-<img src="Screenshot 1.png" alt="GroundedRAG Architecture" width="100%" />
 
 # GroundedRAG
 
@@ -24,6 +23,8 @@
 ## Live Demo
 
 GroundedRAG is fully deployed and running right now.
+<img src="Screenshot 1.png" alt="GroundedRAG Architecture" width="100%" />
+
 
 | Layer | Platform | URL |
 |---|---|---|
